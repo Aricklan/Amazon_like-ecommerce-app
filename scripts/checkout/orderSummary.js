@@ -4,6 +4,8 @@ import { formatCurrency } from '../utils/money.js';//named export
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'; 
 
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
+
+import { renderPaymentSummary } from './paymentsummary.js';
 //default export for only one export default function-name
 
 export function renderOderSummary(){
@@ -16,7 +18,7 @@ export function renderOderSummary(){
 
   const deliveryOptionId = cartItem.deliveryOptionId;
   const deliveryOption = getDeliveryOption(deliveryOptionId);
-  
+
   const today = dayjs();
   const deliveryDate= today.add(deliveryOption.deliveryDays, 'days');
   const dateString = deliveryDate.format('dddd, MMMM D');
@@ -98,6 +100,10 @@ export function renderOderSummary(){
       removeFromCrat(productId);
       const container = document.querySelector(`.js-cart-item-container-${productId}`);
       container.remove();
+      
+      renderPaymentSummary();
+
+
       })
     }
   );
